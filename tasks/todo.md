@@ -62,19 +62,19 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 **Estimated scope:** Medium (4–5 files).
 
-## Task 4: Prove reservation-aware price-time matching
+## Task 4: Prove reservation-aware price-time matching ✅
 
 **Description:** Implement the framework-independent order book and settlement flow using integer cents, resource reservations, price priority, FIFO sequence, partial fills, and resting-order execution prices.
 
 **Acceptance criteria:**
-- [ ] Best prices match before worse prices and FIFO holds within one price.
-- [ ] Partial/full fills update order status, cash/reserved cash, positions/reserved positions, and per-user trades consistently.
-- [ ] Invalid or underfunded/underheld orders are rejected atomically; accounting conservation assertions pass.
+- [x] Best prices match before worse prices and FIFO holds within one price.
+- [x] Partial/full fills update order status, cash/reserved cash, positions/reserved positions, and per-user trades consistently.
+- [x] Invalid or underfunded/underheld orders are rejected atomically; accounting conservation assertions pass.
 
 **Verification:**
-- [ ] RED/GREEN: `npm run test:unit -- --run apps/server/tests/trading-engine.unit.test.ts`
-- [ ] `npm run typecheck`
-- [ ] `npm run lint`
+- [x] RED/GREEN: focused matching-engine unit suite (5 tests).
+- [x] `npm run typecheck`
+- [x] `npm run lint`
 
 **Dependencies:** Tasks 1–3 (uses identity accounts and market symbols).
 
@@ -84,11 +84,11 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 ## Checkpoint A: Foundation and domain
 
-- [ ] `npm test`
-- [ ] `npm run typecheck`
-- [ ] `npm run lint`
-- [ ] `npm run build`
-- [ ] `docs/verification.md` records RED/GREEN evidence and any resolved failures.
+- [x] `npm test`
+- [x] `npm run typecheck`
+- [x] `npm run lint`
+- [x] `npm run build`
+- [x] `docs/verification.md` records RED/GREEN evidence and any resolved failures.
 
 ## Task 5: Integrate orders, account snapshots, and authenticated WebSocket events
 

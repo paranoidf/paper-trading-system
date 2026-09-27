@@ -1,20 +1,14 @@
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from 'node:crypto';
 import type { SeedSymbol } from './market.js';
+import type { TradingAccount, TradingPosition } from './trading.js';
 
-interface StoredUser {
+interface StoredUser extends TradingAccount {
   id: string;
   username: string;
   passwordHash: string;
   cashCents: number;
-  positions: Map<string, StoredPosition>;
-}
-
-interface StoredPosition {
-  symbol: string;
-  name: string;
-  quantity: number;
-  reservedQuantity: number;
-  averageCostCents: number;
+  reservedCashCents: number;
+  positions: Map<string, TradingPosition>;
 }
 
 export interface PublicUser {
@@ -100,6 +94,7 @@ export class IdentityStore {
       username,
       passwordHash: hashPassword(password),
       cashCents: STARTING_CASH_CENTS,
+      reservedCashCents: 0,
       positions,
     };
     this.usersById.set(id, user);
@@ -123,14 +118,17 @@ export class IdentityStore {
     return user;
   }
 
+  accountById(userId: string): TradingAccount | undefined {
+    return this.usersById.get(userId);
+  }
+
   snapshot(token: string | undefined): AccountSnapshot {
     const user = this.requireUserByToken(token);
-    const reservedCashCents = 0;
     return {
       user: { id: user.id, username: user.username },
       cash: dollars(user.cashCents),
-      reservedCash: dollars(reservedCashCents),
-      availableCash: dollars(user.cashCents - reservedCashCents),
+      reservedCash: dollars(user.reservedCashCents),
+      availableCash: dollars(user.cashCents - user.reservedCashCents),
       positions: [...user.positions.values()].map((position) => ({
         symbol: position.symbol,
         name: position.name,

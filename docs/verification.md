@@ -61,3 +61,26 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - Focused integration suite: PASS, 1/1 test.
 - `npm run typecheck`: PASS.
 - `npm run lint`: PASS.
+
+## 2026-09-27 — Task 4 matching-engine slice
+
+### RED
+
+- Focused engine suite failed because `src/domain/trading.js` did not exist.
+- The tests defined externally observable invariants before implementation: cross-price priority, same-price FIFO, partial fills, resting-price execution, price-improvement release, and atomic rejection.
+
+### GREEN and refactor
+
+- Added integer-cent limit orders, explicit sequence ordering, resource reservation, crossing selection, resting-price settlement, order/trade history, and average-cost updates.
+- Connected identity accounts to the trading boundary through an explicit `TradingAccount` interface; password/session details remain outside the engine.
+- Focused unit suite: PASS, 5/5 tests.
+- `npm run typecheck`: PASS.
+- `npm run lint`: PASS.
+- The partial-fill assertions prove total cash conservation (76,000 + 24,000 cents equals the initial 100,000) while reservations reduce only available, not total, cash.
+
+### Checkpoint A
+
+- `npm test`: PASS — server unit 8/8, server integration 4/4; web correctly reported no tests because no frontend behavior exists yet.
+- `npm run typecheck`: PASS.
+- `npm run lint`: PASS.
+- `npm run build`: PASS — web and server production outputs emitted.
