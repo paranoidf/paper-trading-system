@@ -106,3 +106,20 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - Full integration suite after fix: PASS, 8/8 tests across 4 files.
 - Strict lint then found three untyped test-boundary conversions; explicit response and `RawData` conversion replaced unsafe access.
 - Final focused REST/WebSocket suite: PASS, 4/4 tests; `npm run lint`: PASS; typecheck had already passed before the lint-only findings.
+
+## 2026-09-27 — Task 6 frontend authentication slice
+
+### RED
+
+- Focused web suite failed because `src/stores/session` did not exist.
+
+### GREEN and refactor
+
+- Added typed API boundary, Pinia session store, tab-scoped token persistence, refresh restoration, invalid-session clearing, logout, accessible login/register form, protected shell, and responsive visual foundation.
+- Focused session suite: PASS, 3/3 tests.
+- Initial lint found three unnecessary async test stubs, two redundant state assertions, and Vue template formatting warnings.
+- Removed the semantic issues and applied ESLint's mechanical Vue formatting; no rules were disabled.
+- Regression session suite: PASS, 3/3 tests.
+- `npm run typecheck`: PASS; `npm run lint`: PASS.
+- `npm run build`: PASS — 26 web modules transformed; server emitted successfully.
+- Interactive auth/logout/login verification is intentionally consolidated into Task 10's required real-browser flow after the full UI exists.

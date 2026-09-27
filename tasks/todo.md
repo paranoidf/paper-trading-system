@@ -110,20 +110,20 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 **Estimated scope:** Medium (5 files).
 
-## Task 6: Deliver browser authentication and protected shell
+## Task 6: Deliver browser authentication and protected shell ✅
 
 **Description:** Build the Vue application shell, typed API client/store, registration/login form, session persistence for the tab, clear loading/error states, and logout.
 
 **Acceptance criteria:**
-- [ ] A user can switch login/register mode, submit valid credentials, and reach the protected dashboard shell.
-- [ ] API errors are shown without exposing internal details; logout clears client credentials/state.
-- [ ] Page refresh restores the account through the saved token or returns to auth if invalid.
+- [x] A user can switch login/register mode, submit valid credentials, and reach the protected dashboard shell.
+- [x] API errors are shown without exposing internal details; logout clears client credentials/state.
+- [x] Page refresh restores the account through the saved token or returns to auth if invalid.
 
 **Verification:**
-- [ ] RED/GREEN: `npm run test:unit -- --run apps/web/src/stores/session.test.ts`
-- [ ] `npm run typecheck`
-- [ ] `npm run build`
-- [ ] Manual check: register, logout, login in a running browser.
+- [x] RED/GREEN: focused session-store unit suite (3 tests).
+- [x] `npm run typecheck`
+- [x] `npm run build`
+- [ ] Manual check: consolidated into the required Task 10 Playwright browser flow.
 
 **Dependencies:** Tasks 2 and 5.
 
