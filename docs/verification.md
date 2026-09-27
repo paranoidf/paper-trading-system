@@ -84,3 +84,25 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - `npm run typecheck`: PASS.
 - `npm run lint`: PASS.
 - `npm run build`: PASS — web and server production outputs emitted.
+
+## 2026-09-27 — Task 5 REST/WebSocket integration slice
+
+### RED
+
+- Trading integration reached the running Express app but `POST /api/orders` returned expected `404` in both cases.
+- WebSocket suite failed import because `src/realtime/websocket.js` did not exist.
+
+### GREEN
+
+- Added system composition, order validation/error mapping, serialized account/order/trade snapshots, affected-user notifications, authenticated WebSocket connections, market broadcasts, and user-scoped account events.
+- REST focused suite: PASS, 2/2 tests.
+- Initial WebSocket run exposed a test race: `connected` could arrive between the client `open` event and later listener registration; timeout then left sockets open and blocked teardown.
+
+### Debugging and regression guard
+
+- Reproduced the timeout, localized it to test event capture, and registered the first-message promise before awaiting `open`.
+- Added explicit socket termination and WebSocket-server closure in teardown.
+- Original WebSocket scenario: PASS, 2/2 tests.
+- Full integration suite after fix: PASS, 8/8 tests across 4 files.
+- Strict lint then found three untyped test-boundary conversions; explicit response and `RawData` conversion replaced unsafe access.
+- Final focused REST/WebSocket suite: PASS, 4/4 tests; `npm run lint`: PASS; typecheck had already passed before the lint-only findings.

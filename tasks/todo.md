@@ -90,19 +90,19 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 - [x] `npm run build`
 - [x] `docs/verification.md` records RED/GREEN evidence and any resolved failures.
 
-## Task 5: Integrate orders, account snapshots, and authenticated WebSocket events
+## Task 5: Integrate orders, account snapshots, and authenticated WebSocket events ✅
 
 **Description:** Expose the engine through validated REST endpoints and push public market/user-private account updates over session-bound WebSockets.
 
 **Acceptance criteria:**
-- [ ] Order submission and account snapshot conform to SPEC response/error contracts.
-- [ ] A crossing two-user scenario updates both accounts and emits account events to the correct sockets.
-- [ ] Unauthorized sockets are closed and no user's private payload reaches another user's socket.
+- [x] Order submission and account snapshot conform to SPEC response/error contracts.
+- [x] A crossing two-user scenario updates both accounts and emits account events to the correct sockets.
+- [x] Unauthorized sockets are closed and no user's private payload reaches another user's socket.
 
 **Verification:**
-- [ ] RED/GREEN: `npm run test:integration -- --run apps/server/tests/trading.integration.test.ts`
-- [ ] RED/GREEN: `npm run test:integration -- --run apps/server/tests/websocket.integration.test.ts`
-- [ ] `npm run typecheck`
+- [x] RED/GREEN: focused trading REST integration suite (2 tests).
+- [x] RED/GREEN: focused WebSocket integration suite (2 tests).
+- [x] `npm run typecheck`
 
 **Dependencies:** Tasks 2–4.
 

@@ -118,12 +118,23 @@ export class IdentityStore {
     return user;
   }
 
+  userIdByToken(token: string | undefined): string | undefined {
+    const userId = token ? this.userIdsByToken.get(token) : undefined;
+    return userId && this.usersById.has(userId) ? userId : undefined;
+  }
+
   accountById(userId: string): TradingAccount | undefined {
     return this.usersById.get(userId);
   }
 
-  snapshot(token: string | undefined): AccountSnapshot {
+  snapshot(token: string | undefined, orders: unknown[] = [], trades: unknown[] = []): AccountSnapshot {
     const user = this.requireUserByToken(token);
+    return this.snapshotForUser(user.id, orders, trades);
+  }
+
+  snapshotForUser(userId: string, orders: unknown[] = [], trades: unknown[] = []): AccountSnapshot {
+    const user = this.usersById.get(userId);
+    if (!user) throw new IdentityError('UNAUTHORIZED', '登录已失效，请重新登录');
     return {
       user: { id: user.id, username: user.username },
       cash: dollars(user.cashCents),
@@ -137,8 +148,8 @@ export class IdentityStore {
         availableQuantity: position.quantity - position.reservedQuantity,
         averageCost: dollars(position.averageCostCents),
       })),
-      orders: [],
-      trades: [],
+      orders,
+      trades,
     };
   }
 
