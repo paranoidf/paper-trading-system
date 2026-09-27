@@ -153,20 +153,20 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 **Estimated scope:** Split internally into focused UI increments; no individual increment may exceed ~5 files.
 
-## Task 8: Deliver live updates and reconnect recovery
+## Task 8: Deliver live updates and reconnect recovery ✅
 
 **Description:** Add a typed WebSocket client, public/private event handling, connection indicator, bounded reconnect backoff, cleanup, and authoritative snapshot refresh after reconnection.
 
 **Acceptance criteria:**
-- [ ] Quote/account events update visible state without refresh and malformed events are ignored safely.
-- [ ] Disconnect triggers visible reconnecting state and bounded retries; reconnect fetches fresh market/account snapshots.
-- [ ] Logout destroys timers/socket and prevents stale updates into the next session.
+- [x] Quote/account events update visible state without refresh and malformed events are ignored safely.
+- [x] Disconnect triggers visible reconnecting state and bounded retries; reconnect fetches fresh market/account snapshots.
+- [x] Logout destroys timers/socket and prevents stale updates into the next session.
 
 **Verification:**
-- [ ] RED/GREEN: `npm run test:unit -- --run apps/web/src/services/realtime.test.ts`
-- [ ] `npm run typecheck`
-- [ ] `npm test`
-- [ ] Manual check: stop/restart backend and observe recovery.
+- [x] RED/GREEN: focused realtime-client suite (3 tests, including malformed nested data).
+- [x] `npm run typecheck`
+- [x] `npm test`
+- [ ] Manual check: consolidated into Task 10 Playwright reconnect flow.
 
 **Dependencies:** Tasks 5–7.
 
@@ -176,11 +176,11 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 ## Checkpoint B: Integrated application
 
-- [ ] `npm test`
-- [ ] `npm run typecheck`
-- [ ] `npm run lint`
-- [ ] `npm run build`
-- [ ] Development runtime completes auth, quote, order, match, and reconnect smoke flow.
+- [x] `npm test`
+- [x] `npm run typecheck`
+- [x] `npm run lint`
+- [x] `npm run build`
+- [ ] Runtime auth, quote, order, match, and reconnect smoke flow is the Task 10 Playwright gate.
 
 ## Task 9: Complete production delivery and durable documentation
 

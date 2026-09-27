@@ -139,3 +139,21 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - `npm run typecheck`: PASS; `npm run lint`: PASS.
 - `npm run build`: PASS — 30 web modules transformed; web CSS 6.70 kB and JS 83.65 kB before gzip; server emitted successfully.
 - Two-user settlement is already proven by backend integration; the actual visible two-tab flow remains part of Task 10 Playwright acceptance.
+
+## 2026-09-27 — Task 8 realtime/recovery slice
+
+### RED, GREEN, and debug loop
+
+- Initial RED: focused suite failed because `src/services/realtime` did not exist.
+- Added runtime event validation, bounded 1–10 second exponential reconnect, authoritative refresh after reconnect, stale-socket checks, and cleanup.
+- First GREEN attempt exposed a cross-runtime bug: `instanceof MessageEvent` rejected structurally valid events in the test realm. Replaced constructor identity with a `data` boundary check; focused suite passed 3/3.
+- Full web suite then exposed a microtask assertion race after async reconnect refresh. The test now awaits a real Promise microtask; full web suite passed 9/9.
+- Slice self-review added a malicious nested account payload. It first failed as expected because shallow array validation invoked the account callback twice; deep position/order/trade guards fixed the boundary and returned the suite to 3/3.
+
+### Checkpoint B
+
+- `npm test`: PASS — server unit 8/8, web unit 9/9, server integration 8/8 (25 total tests).
+- `npm run typecheck`: PASS.
+- `npm run lint`: PASS.
+- `npm run build`: PASS — web 31 modules, CSS 6.97 kB, JS 87.00 kB before gzip; server emit successful.
+- Real runtime smoke/reconnect remains intentionally gated on production serving and the final Playwright phase.
