@@ -23,18 +23,18 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 **Estimated scope:** Medium (configuration grouped as one foundation slice). TDD exemption: static scaffold has no business behavior.
 
-## Task 2: Deliver registration, login, and account bootstrap API
+## Task 2: Deliver registration, login, and account bootstrap API ✅
 
 **Description:** Add in-memory users/sessions with hashed passwords, unique usernames, bearer authentication, exact starting cash, seeded holdings, and normalized API errors.
 
 **Acceptance criteria:**
-- [ ] Registration creates one user with 1,000,000 cash and seeded holdings; duplicate/invalid registration is rejected.
-- [ ] Login succeeds only for matching credentials and returns a new opaque token.
-- [ ] Protected account access rejects missing/invalid tokens and never exposes password material.
+- [x] Registration creates one user with 1,000,000 cash and seeded holdings; duplicate/invalid registration is rejected.
+- [x] Login succeeds only for matching credentials and returns a new opaque token.
+- [x] Protected account access rejects missing/invalid tokens and never exposes password material.
 
 **Verification:**
-- [ ] RED/GREEN: `npm run test:integration -- --run apps/server/tests/auth.integration.test.ts`
-- [ ] `npm run typecheck`
+- [x] RED/GREEN: focused Vitest auth integration suite (3 tests).
+- [x] `npm run typecheck`
 
 **Dependencies:** Task 1.
 

@@ -28,3 +28,20 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - `npm run lint` — PASS (0 errors/warnings).
 - `npm run build` — PASS (Vite 8.3.1: 19 modules; server TypeScript emit successful).
 - Task 1 is configuration-only, so TDD is explicitly exempt; its executable quality gates are the proof.
+
+## 2026-09-27 — Task 2 identity/session slice
+
+### RED
+
+- Focused command: `npm exec --workspace @paper-trading/server vitest -- run --config vitest.integration.config.ts tests/auth.integration.test.ts`.
+- Expected failure: `Cannot find module '../src/http/app.js'`; the tested application boundary did not exist.
+- A prior attempt was discarded as invalid RED because the sandbox raised `spawn EPERM` before test collection. The command was rerun with approved test-process permissions.
+
+### GREEN and refactor
+
+- Implemented in-memory registration/login, scrypt password hashing, opaque sessions, seeded 1,000-share positions, exact 1,000,000 cash, bearer-protected snapshots, validation, and normalized errors.
+- Focused suite: PASS, 3/3 tests.
+- `npm run typecheck`: PASS.
+- Initial lint found eight unsafe Supertest `any` response accesses; test boundaries were explicitly narrowed instead of weakening lint.
+- Final `npm run lint`: PASS.
+- Focused regression after assertion tightening: PASS, 3/3 tests.
