@@ -1,10 +1,5 @@
 import { randomBytes, randomUUID, scryptSync, timingSafeEqual } from 'node:crypto';
-
-export interface SeedSymbol {
-  symbol: string;
-  name: string;
-  initialPrice: number;
-}
+import type { SeedSymbol } from './market.js';
 
 interface StoredUser {
   id: string;

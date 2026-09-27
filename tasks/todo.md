@@ -42,19 +42,19 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 **Estimated scope:** Medium (5 focused files).
 
-## Task 3: Deliver deterministic market snapshot and event source
+## Task 3: Deliver deterministic market snapshot and event source ✅
 
 **Description:** Add at least three seeded symbols, percent-change calculation, injectable random price movement, and a stoppable one-second market loop exposed through REST/event callbacks.
 
 **Acceptance criteria:**
-- [ ] Market snapshot contains at least three unique symbols with code, name, price, and signed percentage change.
-- [ ] A deterministic tick changes prices only by the configured small bound and never below one cent.
-- [ ] Timer lifecycle starts/stops without leaking handles; public REST returns the latest snapshot.
+- [x] Market snapshot contains at least three unique symbols with code, name, price, and signed percentage change.
+- [x] A deterministic tick changes prices only by the configured small bound and never below one cent.
+- [x] Timer lifecycle starts/stops without leaking handles; public REST returns the latest snapshot.
 
 **Verification:**
-- [ ] RED/GREEN: `npm run test:unit -- --run apps/server/tests/market.unit.test.ts`
-- [ ] RED/GREEN: `npm run test:integration -- --run apps/server/tests/market.integration.test.ts`
-- [ ] `npm run typecheck`
+- [x] RED/GREEN: focused market unit suite (3 tests).
+- [x] RED/GREEN: focused market integration suite (1 test).
+- [x] `npm run typecheck`
 
 **Dependencies:** Task 1.
 

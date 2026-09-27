@@ -45,3 +45,19 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - Initial lint found eight unsafe Supertest `any` response accesses; test boundaries were explicitly narrowed instead of weakening lint.
 - Final `npm run lint`: PASS.
 - Focused regression after assertion tightening: PASS, 3/3 tests.
+
+## 2026-09-27 — Task 3 market-data slice
+
+### RED
+
+- Unit suite failed because `src/domain/market.js` did not exist.
+- Integration suite reached the app and failed `GET /api/market` with expected `404`, proving the endpoint contract was absent.
+
+### GREEN and refactor
+
+- Added cent-based quote state, bounded ±0.5% tick movement, previous-close percentage calculation, subscriptions, and idempotent timer lifecycle.
+- Added public market REST snapshot and started the timer only in the production entry, keeping integration tests free of open handles.
+- Focused unit suite: PASS, 3/3 tests.
+- Focused integration suite: PASS, 1/1 test.
+- `npm run typecheck`: PASS.
+- `npm run lint`: PASS.

@@ -1,9 +1,11 @@
 import express, { type Request } from 'express';
 import { z } from 'zod';
-import { IdentityError, IdentityStore, type SeedSymbol } from '../domain/identity.js';
+import { IdentityError, IdentityStore } from '../domain/identity.js';
+import { MarketService, type SeedSymbol } from '../domain/market.js';
 
 interface ApplicationOptions {
   symbols: SeedSymbol[];
+  market?: MarketService;
 }
 
 const credentialsSchema = z.object({
@@ -26,12 +28,17 @@ function bearerToken(request: Request): string | undefined {
 export function createApplication(options: ApplicationOptions): express.Express {
   const app = express();
   const identity = new IdentityStore(options.symbols);
+  const market = options.market ?? new MarketService(options.symbols);
 
   app.disable('x-powered-by');
   app.use(express.json({ limit: '16kb' }));
 
   app.get('/api/health', (_request, response) => {
     response.json({ status: 'ok' });
+  });
+
+  app.get('/api/market', (_request, response) => {
+    response.json(market.snapshot());
   });
 
   app.post('/api/auth/register', (request, response) => {
