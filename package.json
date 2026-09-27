@@ -1,0 +1,30 @@
+{
+  "name": "stock-paper-trading-system",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev": "concurrently -k -n server,web -c cyan,magenta \"npm run dev --workspace @paper-trading/server\" \"npm run dev --workspace @paper-trading/web\"",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "test:unit": "npm run test:unit --workspaces --if-present",
+    "test:integration": "npm run test:integration --workspace @paper-trading/server",
+    "test": "npm run test:unit && npm run test:integration",
+    "build": "npm run build --workspace @paper-trading/web && npm run build --workspace @paper-trading/server",
+    "start": "npm run start --workspace @paper-trading/server"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "concurrently": "latest",
+    "eslint": "latest",
+    "eslint-plugin-vue": "latest",
+    "globals": "latest",
+    "typescript": "latest",
+    "typescript-eslint": "latest",
+    "vitest": "latest"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "@paper-trading/web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "vue-tsc --noEmit",
+    "test:unit": "vitest run",
+    "build": "vue-tsc --noEmit && vite build"
+  },
+  "dependencies": {
+    "pinia": "latest",
+    "vue": "latest"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "vite": "latest",
+    "vue-tsc": "latest"
+  }
+}
