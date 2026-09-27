@@ -5,4 +5,4 @@ coverage/
 .env.*
 !.env.example
 npm-debug.log*
-output/playwright/.playwright-cli/
+output/playwright/**/.playwright-cli/

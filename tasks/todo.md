@@ -123,7 +123,7 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 - [x] RED/GREEN: focused session-store unit suite (3 tests).
 - [x] `npm run typecheck`
 - [x] `npm run build`
-- [ ] Manual check: consolidated into the required Task 10 Playwright browser flow.
+- [x] Manual check: registration, logout/login, and protected-shell restoration passed in the Task 10 Playwright flow.
 
 **Dependencies:** Tasks 2 and 5.
 
@@ -145,7 +145,7 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 - [x] `npm run typecheck`
 - [x] `npm run lint`
 - [x] `npm run build`
-- [ ] Manual check: consolidated into the required Task 10 two-session Playwright flow.
+- [x] Manual check: two-session rejected-order and crossing-order flows passed in Playwright.
 
 **Dependencies:** Tasks 5–6.
 
@@ -166,7 +166,7 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 - [x] RED/GREEN: focused realtime-client suite (3 tests, including malformed nested data).
 - [x] `npm run typecheck`
 - [x] `npm test`
-- [ ] Manual check: consolidated into Task 10 Playwright reconnect flow.
+- [x] Manual check: forced WebSocket close showed reconnecting, then restored the current REST snapshot and connected state.
 
 **Dependencies:** Tasks 5–7.
 
@@ -180,7 +180,7 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 - [x] `npm run typecheck`
 - [x] `npm run lint`
 - [x] `npm run build`
-- [ ] Runtime auth, quote, order, match, and reconnect smoke flow is the Task 10 Playwright gate.
+- [x] Runtime auth, quote, order, match, and reconnect smoke flow passed the Task 10 Playwright gate.
 
 ## Task 9: Complete production delivery and durable documentation ✅
 
@@ -194,7 +194,7 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 **Verification:**
 - [x] `npm run build`
 - [x] `npm run start` then HTTP health/home/deep-link checks.
-- [ ] Follow README commands from a clean `npm ci` in Task 10 final gate.
+- [x] Followed README commands from a clean `npm ci` in the Task 10 final gate.
 
 **Dependencies:** Tasks 1–8.
 
@@ -202,25 +202,25 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 **Estimated scope:** Documentation/config slices; behavioral production fallback uses an integration test first.
 
-## Task 10: Run final gate, independent review loop, and Playwright acceptance
+## Task 10: Run final gate, independent review loop, and Playwright acceptance ✅
 
 **Description:** Execute every required command, perform a read-only five-axis review of requirements/spec/full diff/tests/dependencies/docs/evidence, fix all Critical/Required findings through TDD/debugging, then run real-browser acceptance with artifacts.
 
 **Acceptance criteria:**
-- [ ] Install, typecheck, lint, unit, integration, full test, web/server build, production start, and README walkthrough all pass with recorded output.
-- [ ] Final review records Critical/Required/Optional/Nit findings and ends with zero unresolved Critical/Required issues.
-- [ ] Playwright verifies registration/login, live quotes, rejected invalid trade, two-user crossing trade, visible account updates, and reconnect recovery; console/network checks have no unexplained failures.
+- [x] Install, typecheck, lint, unit, integration, full test, web/server build, production start, and README walkthrough all pass with recorded output.
+- [x] Final review records Critical/Required/Optional/Nit findings and ends with zero unresolved Critical/Required issues.
+- [x] Playwright verifies registration/login, live quotes, rejected invalid trade, two-user crossing trade, visible account updates, and reconnect recovery; console/network checks have no unexplained failures.
 
 **Verification:**
-- [ ] `npm ci`
-- [ ] `npm run typecheck`
-- [ ] `npm run lint`
-- [ ] `npm run test:unit`
-- [ ] `npm run test:integration`
-- [ ] `npm test`
-- [ ] `npm run build`
-- [ ] `npm run start` and README smoke commands.
-- [ ] Playwright CLI snapshot after every navigation/major DOM change, screenshots/trace in `output/playwright/`.
+- [x] `npm ci`
+- [x] `npm run typecheck`
+- [x] `npm run lint`
+- [x] `npm run test:unit`
+- [x] `npm run test:integration`
+- [x] `npm test`
+- [x] `npm run build`
+- [x] `npm run start` and README smoke commands.
+- [x] Playwright CLI snapshot after every navigation/major DOM change; named screenshots are in `output/playwright/final/` and raw session traces were inspected locally.
 
 **Dependencies:** Tasks 1–9.
 
@@ -230,8 +230,8 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 ## Checkpoint C: Complete
 
-- [ ] All numbered tasks and acceptance criteria are checked.
-- [ ] All SPEC success criteria are traced to evidence.
-- [ ] No unresolved Critical or Required review finding.
-- [ ] No uncommitted accidental/generated files; intentional deliverables are listed.
-- [ ] External GitHub push/publication remains explicitly pending authorization.
+- [x] All numbered tasks and acceptance criteria are checked.
+- [x] All SPEC success criteria are traced to evidence in `docs/verification.md`.
+- [x] No unresolved Critical or Required review finding.
+- [x] No uncommitted accidental/generated files; intentional deliverables are listed.
+- [x] External GitHub push/publication remains explicitly pending authorization.

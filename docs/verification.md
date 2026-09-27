@@ -189,3 +189,48 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - Full suite after repair: PASS — 30/30 tests.
 - `npm run typecheck`: PASS; `npm run lint`: PASS; `npm run build`: PASS.
 - Round 2 verdict: Approve, with zero unresolved Critical/Required findings. Full categories and optional risks are in `docs/review.md`.
+
+## 2026-09-27 — Task 10 final gate and real-browser acceptance
+
+### Clean and automated gates
+
+- `npm ci`: PASS — 302 packages installed from the lockfile, 305 audited, 0 vulnerabilities. The restricted sandbox first returned `spawn EPERM`; the identical approved command passed without a source change.
+- `npm run typecheck`: PASS — server `tsc --noEmit` and web `vue-tsc --noEmit`.
+- `npm run lint`: PASS — zero errors or warnings.
+- `npm run test:unit`: PASS — server 8/8 and web 11/11.
+- `npm run test:integration`: PASS — server 11/11 across six integration files.
+- `npm test`: PASS — 30/30 total tests.
+- `npm run build`: PASS — web 32 modules (CSS 6.97 kB, JS 87.07 kB before gzip) and server TypeScript output.
+- `npm run start`: PASS — one production process served `/api/health`, `/`, `/portfolio`, REST, and WebSocket on port 3000.
+- README walkthrough: PASS — clean install, quality commands, build, production start, health, root, and SPA deep-link checks were followed as written.
+
+### Playwright CLI browser acceptance
+
+- Environment: Playwright CLI through the repository-requested skill wrapper, Chromium in two isolated headed sessions (`alice` and `bob`), production app at `http://127.0.0.1:3000`.
+- Registration/login: Alice registered with exactly ¥1,000,000.00 and three seeded holdings, logged out, switched to login, and restored the protected dashboard with the same account.
+- Live market: AAPL/MSFT/NVDA cards included code, name, price, and signed change. Consecutive snapshots observed AAPL move from ¥134.18 to ¥133.89 (with the other quotes also changing) without a reload.
+- Rejected order: Alice attempted to buy 1,000 AAPL at ¥100,000.00. The UI displayed `可用资金不足`; cash remained ¥1,000,000.00 and no order was added. The associated HTTP 422 and its console resource message are expected evidence of this deliberate negative case.
+- Crossing order: Alice posted a 4-share AAPL sell at ¥100.00; Bob bought 4 at ¥105.00. Resting-price execution occurred at ¥100.00. Alice ended with ¥1,000,400.00 and 996 AAPL; Bob ended with ¥999,600.00 and 1004 AAPL. Both orders showed zero remaining and `已成交`; both trade tables showed 4 shares at ¥100.00.
+- Reconnect: Chromium offline emulation did not terminate an already-open WebSocket, so it was rejected as a false-positive method. A page-local, non-persistent wrapper captured the next native WebSocket after Bob re-login; the socket was closed while the first retry timer was briefly held for evidence capture. The DOM changed to `正在重连`. Releasing the original retry callback created a new native connection, ran the REST snapshot refresh, returned to `实时已连接`, refreshed AAPL from ¥122.03 to ¥118.77, and preserved Bob's authoritative cash, 1004-share position, order, and fill.
+- Console audit: Bob had 0 errors/0 warnings. Alice had one error only: the expected 422 from the deliberately rejected order. No script exception or unexplained console failure remained.
+- Network audit: all application requests were 200/201 except the intentional 422 rejection. Bob's reconnect added successful 200 market/account refreshes.
+- Snapshots were captured after every navigation and material DOM state change. Raw CLI traces were recorded and inspected locally; compact named screenshots are retained in `output/playwright/final/` to keep the repository reproducible without committing ~114 MB of browser internals.
+
+### Playwright tooling recovery record
+
+- The default Windows `bash` resolved to WSL and failed with `E_ACCESSDENIED`; Git Bash initially failed inside the restricted sandbox with `couldn't create signal pipe, Win32 error 5`. Running the official wrapper through Git Bash with approved GUI/process access fixed the environment layer.
+- The wrapper's `--help` printed its full command set, then hit a libuv shutdown assertion. Normal browser commands subsequently exited 0, so the assertion was isolated to help-process teardown and did not affect acceptance.
+- A first `run-code` wait used syntax unsupported by this CLI version and returned `Unexpected identifier 'page'`; host-side sub-two-second waits plus normal snapshots replaced it. No application change was made.
+
+### Success-criterion trace
+
+1. Registration/login and exact bootstrap state: auth integration tests plus the Alice browser flow.
+2. Three live quotes and approximately one-second changes: market unit/integration tests plus consecutive browser snapshots.
+3. Valid statuses and atomic rejection: engine/REST tests plus the visible 422 rejection and unchanged browser state.
+4. Price-time/FIFO/partial/resting-price settlement: engine tests plus the two-session ¥100 resting-price execution.
+5. Authenticated private portfolio UI and isolation: WebSocket integration tests plus independent Alice/Bob browser sessions.
+6. Push and reconnect snapshot recovery: realtime unit tests plus the forced-close browser flow.
+7. Reproducible root commands and one-process serving: clean final command gate and production smoke checks above.
+8. README completeness: `README.md` documents commands, features, decisions, and in-memory limits.
+9. Prompt record: `docs/prompts.md` contains four representative, reviewed prompts.
+10. Review and browser evidence: `docs/review.md` Round 2 has no Critical/Required findings; named screenshots and console/network audits are recorded here.
