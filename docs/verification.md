@@ -123,3 +123,19 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - `npm run typecheck`: PASS; `npm run lint`: PASS.
 - `npm run build`: PASS — 26 web modules transformed; server emitted successfully.
 - Interactive auth/logout/login verification is intentionally consolidated into Task 10's required real-browser flow after the full UI exists.
+
+## 2026-09-27 — Task 7 trading-dashboard slice
+
+### RED
+
+- Focused web suite failed because `src/stores/trading` did not exist.
+
+### GREEN and refactor
+
+- Added typed market/order API calls, trading store, authoritative snapshot replacement, client-side numeric validation, responsive market cards, trade ticket, account metrics, holdings, orders, and recent trades.
+- Focused store suite: PASS, 3/3 tests.
+- Vue template was mechanically formatted with ESLint; a remaining unsafe test URL stringification was replaced with explicit union narrowing.
+- Regression store suite: PASS, 3/3 tests.
+- `npm run typecheck`: PASS; `npm run lint`: PASS.
+- `npm run build`: PASS — 30 web modules transformed; web CSS 6.70 kB and JS 83.65 kB before gzip; server emitted successfully.
+- Two-user settlement is already proven by backend integration; the actual visible two-tab flow remains part of Task 10 Playwright acceptance.

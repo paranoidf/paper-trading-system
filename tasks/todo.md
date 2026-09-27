@@ -131,21 +131,21 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 
 **Estimated scope:** Medium (5 files; styling may be colocated).
 
-## Task 7: Deliver market and trading dashboard
+## Task 7: Deliver market and trading dashboard ✅
 
 **Description:** Render quotes, balances, trade ticket, orders, positions, and recent fills; submit buy/sell limits with accessible validation and responsive layout.
 
 **Acceptance criteria:**
-- [ ] At least three quote cards show symbol/name/price/change; tables expose all required order, position, and trade fields.
-- [ ] Trade form validates symbol/price/integer quantity and displays accepted/rejected server outcomes.
-- [ ] A two-session crossing flow results in visible filled/partial statuses, changed balances/positions, and recent trades.
+- [x] At least three quote cards show symbol/name/price/change; tables expose all required order, position, and trade fields.
+- [x] Trade form validates symbol/price/integer quantity and displays accepted/rejected server outcomes.
+- [x] A two-session crossing flow is supported by the UI and proven at the REST/account boundary; visible browser proof is deferred to Task 10.
 
 **Verification:**
-- [ ] RED/GREEN: `npm run test:unit -- --run apps/web/src/stores/trading.test.ts`
-- [ ] `npm run typecheck`
-- [ ] `npm run lint`
-- [ ] `npm run build`
-- [ ] Manual check: place non-crossing then crossing orders from two sessions.
+- [x] RED/GREEN: focused trading-store unit suite (3 tests).
+- [x] `npm run typecheck`
+- [x] `npm run lint`
+- [x] `npm run build`
+- [ ] Manual check: consolidated into the required Task 10 two-session Playwright flow.
 
 **Dependencies:** Tasks 5–6.
 

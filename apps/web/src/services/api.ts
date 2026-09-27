@@ -1,4 +1,10 @@
-import type { AccountSnapshot, AuthResponse } from '../types';
+import type {
+  AccountSnapshot,
+  AuthResponse,
+  MarketQuote,
+  OrderRequest,
+  OrderResponse,
+} from '../types';
 
 interface ErrorEnvelope {
   error?: { code?: string; message?: string };
@@ -46,4 +52,16 @@ export function authenticate(
 
 export function fetchAccount(token: string): Promise<AccountSnapshot> {
   return requestJson<AccountSnapshot>('/api/account', {}, token);
+}
+
+export function fetchMarket(): Promise<MarketQuote[]> {
+  return requestJson<MarketQuote[]>('/api/market');
+}
+
+export function placeOrder(token: string, order: OrderRequest): Promise<OrderResponse> {
+  return requestJson<OrderResponse>(
+    '/api/orders',
+    { method: 'POST', body: JSON.stringify(order) },
+    token,
+  );
 }

@@ -48,3 +48,22 @@ export interface AuthResponse {
   token: string;
   user: UserSummary;
 }
+
+export interface MarketQuote {
+  symbol: string;
+  name: string;
+  price: number;
+  changePercent: number;
+}
+
+export interface OrderRequest {
+  symbol: string;
+  side: 'buy' | 'sell';
+  price: number;
+  quantity: number;
+}
+
+export interface OrderResponse {
+  order: Order;
+  account: AccountSnapshot;
+}

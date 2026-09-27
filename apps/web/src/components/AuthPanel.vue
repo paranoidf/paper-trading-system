@@ -8,8 +8,12 @@ const username = ref('');
 const password = ref('');
 
 async function submit() {
-  if (mode.value === 'register') await session.register(username.value, password.value);
-  else await session.login(username.value, password.value);
+  try {
+    if (mode.value === 'register') await session.register(username.value, password.value);
+    else await session.login(username.value, password.value);
+  } catch {
+    // The store already exposes a user-safe error message.
+  }
 }
 </script>
 
