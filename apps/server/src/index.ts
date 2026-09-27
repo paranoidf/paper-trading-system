@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+import { fileURLToPath } from 'node:url';
 import { createSystem } from './http/app.js';
 import { MarketService, type SeedSymbol } from './domain/market.js';
 import { attachWebSocket } from './realtime/websocket.js';
@@ -10,7 +11,8 @@ const symbols: SeedSymbol[] = [
   { symbol: 'NVDA', name: 'NVIDIA', initialPrice: 135.75 },
 ];
 const market = new MarketService(symbols);
-const system = createSystem({ symbols, market });
+const staticDirectory = fileURLToPath(new URL('../../web/dist', import.meta.url));
+const system = createSystem({ symbols, market, staticDirectory });
 const server = createServer(system.app);
 attachWebSocket(server, system);
 

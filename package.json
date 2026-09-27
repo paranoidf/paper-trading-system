@@ -15,7 +15,7 @@
     "start": "npm run start --workspace @paper-trading/server"
   },
   "engines": {
-    "node": ">=20"
+    "node": "^22.12.0 || ^24.0.0 || >=26.0.0"
   },
   "devDependencies": {
     "@eslint/js": "latest",

@@ -182,19 +182,19 @@ Status legend: `[ ]` pending, `[~]` in progress, `[x]` complete, `[!]` blocked.
 - [x] `npm run build`
 - [ ] Runtime auth, quote, order, match, and reconnect smoke flow is the Task 10 Playwright gate.
 
-## Task 9: Complete production delivery and durable documentation
+## Task 9: Complete production delivery and durable documentation ✅
 
 **Description:** Serve the built SPA from Express, finalize root scripts, initialize the local Git repository if still absent, and write README, ADRs, prompt record, limitations, and verification log.
 
 **Acceptance criteria:**
-- [ ] `npm run start` serves `/`, `/api/health`, REST, and WebSocket from one process after build.
-- [ ] README gives exact clean install/dev/test/build/start steps, features, 2–3 decisions, and in-memory limitations.
-- [ ] ADRs, 3–5 representative prompts, verification evidence, and known limitations are complete and consistent with code.
+- [x] `npm run start` serves `/`, `/api/health`, REST, and WebSocket from one process after build.
+- [x] README gives exact clean install/dev/test/build/start steps, features, 2–3 decisions, and in-memory limitations.
+- [x] ADRs, 4 representative prompts, verification evidence, and known limitations are complete and consistent with code.
 
 **Verification:**
-- [ ] `npm run build`
-- [ ] `npm run start` then HTTP health/home checks.
-- [ ] Follow README commands from a clean dependency install.
+- [x] `npm run build`
+- [x] `npm run start` then HTTP health/home/deep-link checks.
+- [ ] Follow README commands from a clean `npm ci` in Task 10 final gate.
 
 **Dependencies:** Tasks 1–8.
 

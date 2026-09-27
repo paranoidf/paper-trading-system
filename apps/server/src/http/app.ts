@@ -1,4 +1,5 @@
 import express, { type Request } from 'express';
+import { resolve } from 'node:path';
 import { z } from 'zod';
 import { IdentityError, IdentityStore } from '../domain/identity.js';
 import { MarketService, type SeedSymbol } from '../domain/market.js';
@@ -12,6 +13,7 @@ import {
 interface ApplicationOptions {
   symbols: SeedSymbol[];
   market?: MarketService;
+  staticDirectory?: string;
 }
 
 type AccountListener = (userIds: Set<string>) => void;
@@ -205,7 +207,20 @@ export function createSystem(options: ApplicationOptions): ApplicationSystem {
     }
   });
 
-  app.use((_request, response) => {
+  if (options.staticDirectory) {
+    app.use(express.static(options.staticDirectory));
+  }
+
+  app.use((request, response) => {
+    if (
+      options.staticDirectory &&
+      request.method === 'GET' &&
+      !request.path.startsWith('/api/') &&
+      request.accepts('html')
+    ) {
+      response.sendFile(resolve(options.staticDirectory, 'index.html'));
+      return;
+    }
     response.status(404).json({ error: { code: 'NOT_FOUND', message: '请求的资源不存在' } });
   });
 

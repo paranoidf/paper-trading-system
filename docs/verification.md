@@ -157,3 +157,23 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - `npm run lint`: PASS.
 - `npm run build`: PASS — web 31 modules, CSS 6.97 kB, JS 87.00 kB before gzip; server emit successful.
 - Real runtime smoke/reconnect remains intentionally gated on production serving and the final Playwright phase.
+
+## 2026-09-27 — Task 9 production delivery
+
+### TDD production serving
+
+- RED: production-serving integration returned `404` for `/` while the unknown API JSON test already passed.
+- GREEN: optional static directory now serves assets and SPA fallback only for non-API HTML GET requests; unknown APIs retain normalized JSON 404.
+- Focused production suite: PASS, 2/2 tests.
+- Full integration suite after change: PASS, 10/10 tests across 5 files.
+
+### Documentation and runtime
+
+- Added README with exact install/dev/test/build/start commands, feature list, architecture summary, API, scope, and known limitations.
+- Added three ADRs and four representative prompt records. These are static documentation changes and are TDD-exempt.
+- Dependency engine contract was aligned with the installed Vite/Vitest packages: Node `^22.12.0 || ^24.0.0 || >=26.0.0`.
+- `npm install`: PASS, lockfile current, 305 packages audited, 0 vulnerabilities.
+- `npm run typecheck`: PASS; `npm run lint`: PASS; `npm run build`: PASS.
+- `npm run start`: PASS; production server listened on `http://localhost:3000`.
+- `GET /api/health`: 200 with `status=ok`; `GET /`: 200 with expected title; `GET /portfolio`: 200 with expected SPA title.
+- The first root-page diagnostic attempt used PowerShell's reserved `$HOME` variable and was invalid; the corrected `$homeResponse` command produced the recorded 200 result. No product change was needed.
