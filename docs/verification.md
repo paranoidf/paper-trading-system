@@ -177,3 +177,15 @@ This log preserves meaningful RED/GREEN evidence, failures, root causes, and fin
 - `npm run start`: PASS; production server listened on `http://localhost:3000`.
 - `GET /api/health`: 200 with `status=ok`; `GET /`: 200 with expected title; `GET /portfolio`: 200 with expected SPA title.
 - The first root-page diagnostic attempt used PowerShell's reserved `$HOME` variable and was invalid; the corrected `$homeResponse` command produced the recorded 200 result. No product change was needed.
+
+## 2026-09-27 — Independent review repair loop
+
+- Round 1: no Critical, three Required findings (HTTP error envelope, false-positive reconnect recovery, missing REST runtime validation).
+- Each Required change received a failing regression test before implementation:
+  - malformed JSON returned HTML instead of JSON;
+  - failed snapshot refresh resolved instead of rejecting;
+  - malformed 200 market payload resolved instead of rejecting.
+- Focused GREEN: server error boundary 1/1; web session/trading/realtime 11/11.
+- Full suite after repair: PASS — 30/30 tests.
+- `npm run typecheck`: PASS; `npm run lint`: PASS; `npm run build`: PASS.
+- Round 2 verdict: Approve, with zero unresolved Critical/Required findings. Full categories and optional risks are in `docs/review.md`.

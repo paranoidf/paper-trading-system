@@ -120,4 +120,39 @@ describe('trading store', () => {
     expect(fetchMock).not.toHaveBeenCalled();
     expect(trading.error).toBe('请输入有效价格和整数数量');
   });
+
+  it('propagates snapshot failures so reconnect cannot report a false connected state', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(() =>
+        Promise.resolve(
+          jsonResponse({ error: { code: 'TEMPORARY_FAILURE', message: '快照暂不可用' } }, 503),
+        ),
+      ),
+    );
+    const session = useSessionStore();
+    session.token = 'token';
+    const trading = useTradingStore();
+
+    await expect(trading.refresh()).rejects.toThrow('快照暂不可用');
+    expect(trading.error).toBe('快照暂不可用');
+  });
+
+  it('rejects a malformed successful market response without mutating state', async () => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn((input: RequestInfo | URL) => {
+        const url =
+          typeof input === 'string' ? input : input instanceof URL ? input.href : input.url;
+        return Promise.resolve(jsonResponse(url === '/api/market' ? [{ symbol: 42 }] : account));
+      }),
+    );
+    const session = useSessionStore();
+    session.token = 'token';
+    const trading = useTradingStore();
+
+    await expect(trading.refresh()).rejects.toThrow('服务器返回了无效数据');
+    expect(trading.market).toEqual([]);
+    expect(session.account).toBeNull();
+  });
 });

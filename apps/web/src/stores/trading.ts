@@ -31,6 +31,7 @@ export const useTradingStore = defineStore('trading', {
         session.user = account.user;
       } catch (error) {
         this.error = message(error);
+        throw error;
       } finally {
         this.loading = false;
       }

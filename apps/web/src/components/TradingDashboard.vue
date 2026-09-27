@@ -26,7 +26,12 @@ watch(
   { deep: true },
 );
 onMounted(async () => {
-  await trading.refresh();
+  try {
+    await trading.refresh();
+  } catch {
+    connectionStatus.value = 'disconnected';
+    return;
+  }
   if (!session.token) return;
   const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
   realtime = new RealtimeClient({

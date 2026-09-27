@@ -224,6 +224,25 @@ export function createSystem(options: ApplicationOptions): ApplicationSystem {
     response.status(404).json({ error: { code: 'NOT_FOUND', message: '请求的资源不存在' } });
   });
 
+  app.use((error: unknown, _request: Request, response: express.Response, next: express.NextFunction) => {
+    void next;
+    if (
+      error instanceof SyntaxError &&
+      typeof error === 'object' &&
+      error !== null &&
+      'type' in error &&
+      error.type === 'entity.parse.failed'
+    ) {
+      response.status(400).json({
+        error: { code: 'INVALID_JSON', message: '请求 JSON 格式无效' },
+      });
+      return;
+    }
+    response.status(500).json({
+      error: { code: 'INTERNAL_ERROR', message: '服务器内部错误' },
+    });
+  });
+
   return {
     app,
     identity,
